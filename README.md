@@ -6,10 +6,7 @@ O trabalho consiste na implementação de um sistema bancário distrbuído. Prov
 
 Professor: Diego Guedes
 
-Alunos: Emidio Tonetti
-
-        Paulo Martins
-        
-        Rachimi Solareveski
-        
+Alunos: Emidio Tonetti;
+        Paulo Martins;
+        Rachimi Solareveski;
         Rhuan Webster
