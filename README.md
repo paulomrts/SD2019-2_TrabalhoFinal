@@ -5,6 +5,7 @@ Repositório do trabalho final da disciplina de Sistemas Distribuídos, curso de
 O trabalho consiste na implementação de um sistema bancário distrbuído. Provendo operações e serviços para movimentações financeiras.
 
 Professor: Diego Guedes
+
 Alunos: Emidio Tonetti
         Paulo Martins
         Rachimi Solareveski
