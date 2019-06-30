@@ -1,46 +1,53 @@
-package sistemaBancarioDistribuido;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.br.CPF;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 
+@Data
 @Entity
-	public class Cliente {
+@ToString
+@NoArgsConstructor
+public final class Cliente {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@EqualsAndHashCode.Exclude
+	private Long id;
+	@NotBlank
+	private String firstName;
+	@NotBlank
+	private String middleName;
+	@NotBlank
+	private String lastName;
+	@Email
+	private String email = "";
+	@CPF
+	@NotBlank
+	private String cpf;
+	@OneToOne
+	private Conta conta;
+	@Column(unique = true)
+	private String login = "";
+	@Length(min = 6)
+	private String senha = "";
 
-	    @Id
-	    @GeneratedValue(strategy = GenerationType.IDENTITY)
-	    private Integer id;
-	    private String nome;
-	    private String profissao;
-	    private String endereco;
-	    
-	    @OneToOne
-	    private Conta conta;
-	    
-		public Integer getId() {
-			return id;
-		}
-		public void setId(Integer id) {
-			this.id = id;
-		}
-		public String getNome() {
-			return nome;
-		}
-		public void setNome(String nome) {
-			this.nome = nome;
-		}
-		public String getProfissao() {
-			return profissao;
-		}
-		public void setProfissao(String profissao) {
-			this.profissao = profissao;
-		}
-		public String getEndereco() {
-			return endereco;
-		}
-		public void setEndereco(String endereco) {
-			this.endereco = endereco;
-		}
+
+	public Cliente(String firstName, String middleName, String lastName, String email, String cpf, String login,String senha) {
+		this.firstName = firstName;
+		this.middleName = middleName;
+		this.lastName = lastName;
+		this.email = email;
+		this.cpf = cpf;
+		this.login = login;
+		this.senha = senha;
+	}
+
+	public boolean temLogin() {
+		return (!login.isEmpty() && !senha.isEmpty());
+	}
 }
