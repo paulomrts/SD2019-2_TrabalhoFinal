@@ -1,51 +1,38 @@
-package sistemaBancarioDistribuido;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+import org.hibernate.validator.constraints.Length;
 
-/**
- *  Classe para dados da Conta Bancária
- * 
- * 
- * **/
+import javax.persistence.*;
+import java.math.BigDecimal;
+import java.util.List;
 
+@Data
 @Entity
-
-public class Conta {
-	
+@ToString
+@Table(name = "Conta")
+@NoArgsConstructor
+public final class Conta {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO, generator = "SEQ_CONTAS")
-	
-	private Integer id;
-	private String titular;
-	private String numeroConta;
-	private String agencia;
-	
-	public Integer getId() {
-		return id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@EqualsAndHashCode.Exclude
+	private Long id;
+
+	@Column(name = "digito")
+	private Integer digito = 0;
+	private BigDecimal saldo = BigDecimal.ZERO;
+	@Length(min = 4, max = 4)
+	private String senha;
+	@OneToMany(
+			targetEntity = Historico.class,
+			fetch = FetchType.EAGER,
+			cascade = CascadeType.MERGE)
+	@JoinColumn(name = "conta_id")
+	private List<Historico> historicos;
+
+	public void addHistorico(final Historico historico) {
+		this.historicos.add(historico);
 	}
-	public void setId(Integer id) {
-		this.id = id;
-	}
-	public String getTitular() {
-		return titular;
-	}
-	public void setTitular(String titular) {
-		this.titular = titular;
-	}
-	public String getNumeroConta() {
-		return numeroConta;
-	}
-	public void setNumeroConta(String numeroConta) {
-		this.numeroConta = numeroConta;
-	}
-	public String getAgencia() {
-		return agencia;
-	}
-	public void setAgencia(String agencia) {
-		this.agencia = agencia;
-	}	
-	
 }
